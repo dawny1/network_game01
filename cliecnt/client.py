@@ -31,55 +31,24 @@ class socketClient():
             self.x = int(value[0])
             self.y = int(value[1])
             self.name = value[2]
+            self.arrow_dir = int(value[3])
+            print(self.arrow_dir)
 
-            arrow_len = int(value[3])
+            arrow_len = int(value[4])
             arrows = []
 
             for i in range(arrow_len):
-                x = int(value[i*2+4])
-                y = int(value[i*2+5])
+                x = int(value[i*2+5])
+                y = int(value[i*2+6])
                 arrows.append([x,y])
 
             self.arrows = arrows
 
-            # if self.arrow_len == 1:
-            #     self.arrow_x1 = int(value[4])
-            #     self.arrow_y1 = int(value[5])
-            # elif self.arrow_len == 2:
-            #     self.arrow_x2 = int(value[6])
-            #     self.arrow_y2 = int(value[7])
-            #     self.arrow_x3 = -50
-            #     self.arrow_y3 = -50
-            # elif self.arrow_len == 3:
-            #     self.arrow_x3 = int(value[8])
-            #     self.arrow_y3 = int(value[9])
-
-
-
-
-
-
-            # self.arrow_position_x = []
-            # self.arrow_x = int(value[])
-            # self.arrow_x = int(value[3])
-            # self.arrow_y = int(value[4])
-
-
-            # is_find = False
-            # for user in self.member:
-            #     if user.name == self.name:
-            #         is_find = True
-
-            # if is_find==False:
-            #     user = User(self.screen,0,0,"")
-            #     self.member.append(user)
-            
-            # print(x,type(x))
-            
-    def send_data(self,rec,name,arrows_position):
-        msg = f'{rec.x},{rec.y},{name},{len(arrows_position)}'
+    def send_data(self,rec,name,arrow_dir,arrows_position):
+        msg = f'{rec.x},{rec.y},{name},{arrow_dir},{len(arrows_position)}'
         for pos in arrows_position:
             msg += f',{pos[0]},{pos[1]}'
+        msg +=  ",\n"
         self.client_socket.send(msg.encode())
         # print(msg)
 

@@ -14,8 +14,8 @@ class game():
 
         #기본 변수 생성 및 초기화
         self.isActive = True 
-        self.SCREEN_WIDTH = 1000
-        self.SCREEN_HEIGHT = 1000
+        self.SCREEN_WIDTH = 500
+        self.SCREEN_HEIGHT = 500
         self.clock = pygame.time.Clock() #프레임을 처리 하기위해
         name = pyautogui.prompt('이름을 입력하세요','채팅입력')  
         self.rec_x = -1
