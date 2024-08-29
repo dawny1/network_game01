@@ -27,30 +27,33 @@ class socketClient():
         while True:
             data = client_socket.recv(1024).decode()
             value = data.split(',')
-            print(f"서버메세제:{value},{type(value)}")
+            # print(f"서버메세제:{value},{type(value)}")
             self.x = int(value[0])
             self.y = int(value[1])
             self.name = value[2]
-            self.arrow_dir = int(value[3])
-            print(self.arrow_dir)
+
+            
+            self.player_dir = int(value[3])
+            print(arrows)
 
             arrow_len = int(value[4])
             arrows = []
 
             for i in range(arrow_len):
-                x = int(value[i*2+5])
-                y = int(value[i*2+6])
-                arrows.append([x,y])
+                x = int(value[i*3+5])
+                y = int(value[i*3+6])
+                arrow_dir = int(value[i*3+7])
+                arrows.append([x,y,arrow_dir])
 
             self.arrows = arrows
 
-    def send_data(self,rec,name,arrow_dir,arrows_position):
-        msg = f'{rec.x},{rec.y},{name},{arrow_dir},{len(arrows_position)}'
+    def send_data(self,rec,name,player_dir,arrow_dir,arrows_position):
+        msg = f'{rec.x},{rec.y},{name},{player_dir},{len(arrows_position)}'
         for pos in arrows_position:
-            msg += f',{pos[0]},{pos[1]}'
-        msg +=  ",\n"
+            msg += f',{pos[0]},{pos[1]},{arrow_dir}'
+        # msg +=  ",\n"
         self.client_socket.send(msg.encode())
-        # print(msg)
 
+        # print(msg)
     
         

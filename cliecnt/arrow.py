@@ -20,7 +20,7 @@ class arrow():
         
 
     def draw(self):  
-        if (self.rec.x) > 0 or self.rec.x < self.screen.get_width():  
+        if (self.rec.x) > 0 and self.rec.x < self.screen.get_width():  
             self.rec.x += self.arrow_dir
             self.screen.blit(self.img, self.rec)
             return False

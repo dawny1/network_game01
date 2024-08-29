@@ -24,6 +24,7 @@ class player():
         self.arrow_delay = 0
         self.arrow_once = 0
         self.arrow_dir = -5 
+        self.player_dir = -5 
 
 
     def setText(self):
@@ -48,8 +49,8 @@ class player():
                 self.rec.y += 5
         if key_pressed[K_a]: #왼  
             self.img = self.img_l
-            # self.arrow_lr = 0
             self.arrow_dir = -5
+            self.player_dir = -5
             is_press = True
             self.rec.x -= 5
             if self.rec.x < 0:
@@ -57,6 +58,7 @@ class player():
         if key_pressed[K_d]: #오
             self.img = self.img_r
             self.arrow_dir = 5
+            self.player_dir = 5
             is_press = True
             if self.rec.x < self.screen.get_width()-50: 
                 self.rec.x += 5     
@@ -69,7 +71,6 @@ class player():
                 ar = arrow(self.screen,(x,y),self.arrow_dir)
                 self.arrows.append(ar)
         return is_press
-    
     
     def updateArrow(self):
         #화살 날아가는 장면 연출 
@@ -86,11 +87,8 @@ class player():
         self.setText()
         self.screen.blit(self.img, self.rec)
         if result == True or len(self.arrows_position) > 0 or self.arrow_once:
-            self.client.send_data(self.rec,self.name,self.arrow_dir,self.arrows_position)
+            self.client.send_data(self.rec,self.name,self.player_dir,self.arrow_dir,self.arrows_position)
             self.arrow_once = len(self.arrows_position)
-            # if len(self.arrows_position) == 0:
-            #     self.arrow_once = 0
-            
         return result
 
 

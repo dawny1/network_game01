@@ -28,9 +28,8 @@ class game():
         self.client = socketClient()
         self.me = player(self.screen,300,200,name,self.client)
         self.member = []
-        user = User(self.screen,0,0,"",0,0)
+        user = User(self.screen,0,0,"",0,0,0)
         self.member.append(user)
-
 
 
 #이벤트 확인 및 처리 함수
