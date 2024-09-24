@@ -13,6 +13,10 @@ class socketServer():
         self.server_socket.bind((self.HOST, self.PORT))
         self.server_socket.listen()
         self.server_run()
+        # self.player_pos = {
+        #     len(self.client_sockets) == 1 : '111'
+        # } 
+        self.msg = ""
         
     #client가 접속되는지 기다리고 쓰레드를 생서한다.
     def server_run(self):
@@ -22,18 +26,25 @@ class socketServer():
             self.client_sockets.append(client_socket) #접속된 클라이언트를 리스트에 추가한다.
             print('>> Connected by :', addr[0], ':', addr[1])
             print("연결된 수 : ", len(self.client_sockets))
-            
-            start_new_thread(self.thread_client, (client_socket, addr)) #클라이언트 쓰레드 생성
+            start_new_thread(self.thread_client, (client_socket, addr)) #클라이언트 쓰레드 생성       
+            if len(self.client_sockets) == 1:
+                self.msg = '100,200,'     
+            elif len(self.client_sockets) == 2:
+                self.msg = '400,200,'   
+            client_socket.send(self.msg.encode())
                         
     #접속된 client마다 각각 쓰레드가 생성된다.
-    def thread_client(self,client_socket, addr):
-        
+    def thread_client(self,client_socket,addr):  
+
         while True:
             try:
                 data = client_socket.recv(1024*10).decode()
-                print(f"클라이언트에서 받은 메세지 : {data}")
-                msg = f'{data}'
+                msg = f'{self.msg}'
+                msg += f'{data}'
+                print(msg)
+                
                 for client in self.client_sockets:
+                    # client.send(msg_1.encode()) #문자를 encode해서 클라이언트에게 보낸다.
                     if client_socket != client:#자신을 제외
                         client.send(msg.encode()) #문자를 encode해서 클라이언트에게 보낸다.
             except ConnectionResetError:

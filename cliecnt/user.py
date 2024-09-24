@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 
 class User():
-    def __init__(self,screen,x,y,name,arrow_x,arrow_y,arrow_dir):
+    def __init__(self,screen,x,y,name,hp,player_dir,arrow_x,arrow_y,arrow_dir):
         self.screen = screen
         self.name = name
         self.img = pygame.image.load('./images/dog.png')
@@ -23,28 +23,36 @@ class User():
         self.arrow_rec.y = arrow_y
         self.arrow_dir = arrow_dir
 
+        self.player_dir = player_dir
+
+        
+
         self.rec = self.img.get_rect()
         self.rec.x = x 
         self.rec.y = y
-
-        print(self.arrow_dir)
+    
+    
 
     def setText(self):
         mFont = pygame.font.SysFont("arial", 30)
-        mtext = mFont.render(f'{self.name}', True, 'black')
+        mtext = mFont.render(f'{self.name}: {self.hp}', True, 'red')
         tRec = mtext.get_rect()
-        tRec.centerx = self.rec.x
-        tRec.centery = self.rec.top-10
+        tRec.centerx = self.rec.x+27
+        tRec.centery = self.rec.top-15
         self.screen.blit(mtext, tRec)
+        
 
-    def draw(self,x,y,name,arrows):      
+
+    def draw(self,x,y,name,hp,player_dir,arrows):      
         self.rec.x = x 
         self.rec.y = y
         self.name = name
+        self.hp = hp
+        self.player_dir = player_dir
         self.setText()
-        if self.arrow_dir == 5:
+        if self.player_dir == 5:
             self.img = self.img_r
-        if self.arrow_dir == -5:
+        if self.player_dir == -5:
             self.img = self.img_l
         self.screen.blit(self.img, self.rec)
         for arrow in arrows:
