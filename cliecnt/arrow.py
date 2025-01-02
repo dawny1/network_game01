@@ -14,15 +14,15 @@ class arrow():
             self.img = pygame.transform.flip(self.img, True, False) #반전x,y
 
         #화살이 그려질 시작 위치 잡기
-        self.rec = self.img.get_rect()
-        self.rec.x = rec[0] 
-        self.rec.y = rec[1]
+        self.rect = self.img.get_rect()
+        self.rect.x = rec[0] 
+        self.rect.y = rec[1]
         
 
     def draw(self):  
-        if (self.rec.x) > 0 and self.rec.x < self.screen.get_width():  
-            self.rec.x += self.arrow_dir
-            self.screen.blit(self.img, self.rec)
+        if (self.rect.x) > 0 and self.rect.x < self.screen.get_width():  
+            self.rect.x += self.arrow_dir
+            self.screen.blit(self.img, self.rect)
             return False
         else:
             return True
